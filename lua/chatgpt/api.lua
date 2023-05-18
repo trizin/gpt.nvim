@@ -99,7 +99,7 @@ function Api.setup()
 end
 
 function Api.get_api_key()
-  local stat = vim.loop.fs_stat(file_path)
+  local stat = vim.loop.fs_stat(Config.options.api_key_file)
   if not stat then
     Api.prompt_api_key()
   end
