@@ -92,9 +92,6 @@ end
 
 function Api.setup()
   local api_key = Api.get_api_key()
-  if not api_key then
-    api_key = Api.prompt_api_key()
-  end
   Api.OPENAI_API_KEY = api_key
 end
 
