@@ -31,9 +31,7 @@ end, {
 
 -- this shouldn't be called when neovim is started
 vim.api.nvim_create_user_command("ChatGPTAuth", function(opts)
-  return function()
-    require("chatgpt.api").prompt_api_key()
-  end
+  require("chatgpt.api").prompt_api_key()
 end, {})
 
 vim.api.nvim_create_user_command("ChatGPTReload", function(opts)
