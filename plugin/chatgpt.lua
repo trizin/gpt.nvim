@@ -29,6 +29,14 @@ end, {
   end,
 })
 
+vim.api.nvim_create_user_command("ChatGPTAuth", function(opts)
+  require("chatgpt.api").prompt_api_key()
+end, {})
+
+vim.api.nvim_create_user_command("ChatGPTReload", function(opts)
+  require("chatgpt.api").setup()
+end, {})
+
 vim.api.nvim_create_user_command("ChatGPTCompleteCode", function(opts)
   require("chatgpt").complete_code(opts)
 end, {})

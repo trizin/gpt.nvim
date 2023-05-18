@@ -101,7 +101,8 @@ end
 function Api.get_api_key()
   local stat = vim.loop.fs_stat(Config.options.api_key_file)
   if not stat then
-    Api.prompt_api_key()
+    print("Api key not found, run :ChatGPTAuth to authenticate")
+    return
   end
   local api_key = vim.fn.readfile(Config.options.api_key_file)
   if not api_key then
