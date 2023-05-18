@@ -91,19 +91,34 @@ function Api.close()
 end
 
 function Api.setup()
-  -- API KEY
-  Api.OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-  if not Api.OPENAI_API_KEY then
-    if Config.options.api_key_cmd ~= nil or Config.options.api_key_cmd ~= "" then
-      Api.OPENAI_API_KEY = vim.fn.system(Config.options.api_key_cmd)
-      if not Api.OPENAI_API_KEY then
+  local api_key = Api.get_api_key()
+  if not api_key then
+    api_key = Api.prompt_api_key()
+  end
+  Api.OPENAI_API_KEY = api_key
+end
+
+function Api.get_api_key()
+  local api_key = vim.fn.readfile(Config.options.api_key_file)
+  if not api_key then
+    if Config.options.api_key_cmd ~= nil and Config.options.api_key_cmd ~= "" then
+      api_key = vim.fn.system(Config.options.api_key_cmd)
+      if not api_key then
         error("Config 'api_key_cmd' did not return a value when executed")
       end
-    else
-      error("OPENAI_API_KEY environment variable not set")
     end
   end
-  Api.OPENAI_API_KEY = Api.OPENAI_API_KEY:gsub("%s+$", "")
+  return api_key[1]
+end
+
+function Api.prompt_api_key()
+  local api_key = vim.fn.input("OpenAI API Key: ")
+  if not api_key then
+    error("No API key provided")
+  end
+  api_key = api_key:gsub("%s+$", "")
+  vim.fn.writefile({ api_key }, Config.options.api_key_file)
+  return api_key
 end
 
 return Api
