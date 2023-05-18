@@ -4,8 +4,8 @@ WELCOME_MESSAGE = [[
         you don't get the right answers.
                                       ~ Robert Half
 ]]
-local plugin_dir = vim.fn.stdpath("config")
-local config_file = plugin_dir .. "/gpt.auth"
+local plugin_dir = vim.fn.stdpath("data")
+local config_file = plugin_dir .. "/.gpt.auth"
 local M = {}
 function M.defaults()
   local defaults = {
