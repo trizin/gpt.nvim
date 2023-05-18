@@ -99,6 +99,10 @@ function Api.setup()
 end
 
 function Api.get_api_key()
+  local stat = uv.fs_stat(file_path)
+  if not stat then
+    Api.prompt_api_key()
+  end
   local api_key = vim.fn.readfile(Config.options.api_key_file)
   if not api_key then
     if Config.options.api_key_cmd ~= nil and Config.options.api_key_cmd ~= "" then
